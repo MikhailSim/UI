@@ -31,7 +31,7 @@ def test_add_customer(setup):
         add_customer_button.click()
 
     with allure.step("Подтверждение добавления клиента"):
-        # Ожидание появления модального окна с подтверждением
+        # Ожидание появления модального окна 
         alert = driver.switch_to.alert
         alert_text = alert.text
         alert.accept()
