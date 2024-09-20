@@ -39,14 +39,15 @@ jobs:
       - name: Get Chrome version
         id: get_chrome_version
         run: |
-          CHROME_VERSION=$(google-chrome --version | grep -o '[0-9]*\.[0-9]*')
-          echo "CHROME_VERSION=$CHROME_VERSION" >> $GITHUB_ENV
+          CHROME_VERSION=$(google-chrome --version | grep -o '[0-9]*\.[0-9]*\.[0-9]*')
+          echo "CHROME_VERSION=${CHROME_VERSION}" >> $GITHUB_ENV
 
       - name: Download ChromeDriver
         run: |
-          CHROME_VERSION=$(google-chrome --version | grep -o '[0-9]*\.[0-9]*')
+          CHROME_VERSION=$(google-chrome --version | grep -o '[0-9]*\.[0-9]*\.[0-9]*')
           MAJOR_VERSION=$(echo $CHROME_VERSION | cut -d '.' -f 1)
           MINOR_VERSION=$(echo $CHROME_VERSION | cut -d '.' -f 2)
+          PATCH_VERSION=$(echo $CHROME_VERSION | cut -d '.' -f 3)
           CHROME_DRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${MAJOR_VERSION}.${MINOR_VERSION}")
           echo "Downloading ChromeDriver version: $CHROME_DRIVER_VERSION"
           wget "https://chromedriver.storage.googleapis.com/${CHROME_DRIVER_VERSION}/chromedriver_linux64.zip"
