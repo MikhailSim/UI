@@ -33,8 +33,9 @@ jobs:
 
       - name: Install Google Chrome
         run: |
-          sudo apt-get update
-          sudo apt-get install -y google-chrome-stable
+          wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+          echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
+          sudo apt-get update && sudo apt-get install -y google-chrome-stable
 
       - name: Get Chrome version
         id: get_chrome_version
@@ -46,13 +47,7 @@ jobs:
         run: |
           CHROME_VERSION=$(google-chrome --version | grep -o '[0-9]*\.[0-9]*\.[0-9]*')
           MAJOR_VERSION=$(echo $CHROME_VERSION | cut -d '.' -f 1)
-          
           CHROME_DRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$MAJOR_VERSION")
-          if [ -z "$CHROME_DRIVER_VERSION" ]; then
-            echo "Error: Could not find ChromeDriver version for Chrome $CHROME_VERSION"
-            exit 1
-          fi
-
           echo "Downloading ChromeDriver version: $CHROME_DRIVER_VERSION"
           wget "https://chromedriver.storage.googleapis.com/${CHROME_DRIVER_VERSION}/chromedriver_linux64.zip"
           unzip chromedriver_linux64.zip
