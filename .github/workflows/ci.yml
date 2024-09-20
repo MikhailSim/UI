@@ -53,12 +53,10 @@ jobs:
           chmod +x chromedriver
           sudo mv chromedriver /usr/local/bin/
 
-      # Запуск тестов с Allure
       - name: Run Tests
         run: |
           pytest --alluredir=allure-results
 
-      # Сохранение Allure отчетов
       - name: Upload Allure results
         uses: actions/upload-artifact@v3
         with:
