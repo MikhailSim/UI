@@ -39,8 +39,8 @@ jobs:
           pytest --alluredir=allure-results
 
       # Сохранение Allure отчетов
-      - name: Allure Report
-        uses: actions/upload-artifact@v2
+      - name: Upload Allure results
+        uses: actions/upload-artifact@v3  # Обновляем версию до v3
         with:
           name: allure-results
           path: allure-results
