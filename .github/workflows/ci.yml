@@ -33,19 +33,18 @@ jobs:
 
       - name: Install Google Chrome
         run: |
-          wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-          echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
-          sudo apt-get update && sudo apt-get install -y google-chrome-stable
+          sudo apt-get update
+          sudo apt-get install -y google-chrome-stable
 
       - name: Get Chrome version
         id: get_chrome_version
         run: |
-          CHROME_VERSION=$(google-chrome --version | grep -o '[0-9]*\.[0-9]*\.[0-9]*')
+          CHROME_VERSION=$(google-chrome --version | grep -o '[0-9]*\.[0-9]*')
           echo "CHROME_VERSION=$CHROME_VERSION" >> $GITHUB_ENV
 
       - name: Download ChromeDriver
         run: |
-          CHROME_VERSION=$(google-chrome --version | grep -o '[0-9]*\.[0-9]*\.[0-9]*')
+          CHROME_VERSION=$(google-chrome --version | grep -o '[0-9]*\.[0-9]*')
           MAJOR_VERSION=$(echo $CHROME_VERSION | cut -d '.' -f 1)
           CHROME_DRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$MAJOR_VERSION")
           echo "Downloading ChromeDriver version: $CHROME_DRIVER_VERSION"
