@@ -17,11 +17,9 @@ jobs:
         python-version: [3.8, 3.9]
 
     steps:
-      # Шаги выполнения
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # Установка Python
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
@@ -32,6 +30,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+          pip install webdriver-manager  # Добавляем установку webdriver_manager
 
       # Запуск тестов с Allure
       - name: Run Tests
@@ -40,7 +39,7 @@ jobs:
 
       # Сохранение Allure отчетов
       - name: Upload Allure results
-        uses: actions/upload-artifact@v3  # Обновляем версию до v3
+        uses: actions/upload-artifact@v3
         with:
           name: allure-results
           path: allure-results
